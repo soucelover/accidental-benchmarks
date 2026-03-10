@@ -53,10 +53,10 @@ def beautify_time(time: float) -> str:
     return f"{four_digits(time * 1e12)}ps"
 
 
-def run_test(test_name: str, statement: _Stmt) -> None:
+def run_test(test_name: str, statement: _Stmt, setup: _Stmt = "pass") -> None:
     globs = get_caller_globals(inspect.currentframe())
 
-    timer = timeit.Timer(statement, globals=globs)
+    timer = timeit.Timer(statement, setup, globals=globs)
     loop_count, time_taken = timer.autorange()
 
     print(  # noqa: T201
